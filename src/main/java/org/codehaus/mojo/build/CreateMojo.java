@@ -292,7 +292,15 @@ public class CreateMojo
      * @readonly
      * @required
      */
-    protected MavenSession session;       
+    protected MavenSession session;
+
+    /**
+     * Use the full revision for git changes.
+     *
+     * @parameter
+     * @since 1.0-beta-5
+     */
+    private boolean fullGitRev;
 
     private ScmLogDispatcher logger;
 
@@ -725,10 +733,14 @@ public class CreateMojo
             	command.setLogger(getLogger());
             	command.setRev("HEAD");
             	
-            	return command.execute(repository.getProviderRepository(), 
-            			new ScmFileSet( scmDirectory ), 
-            			new CommandParameters()).getCommandOutput().substring(0, 7);
-            	
+            	String sha1 = command.execute(repository.getProviderRepository(), 
+                                              new ScmFileSet( scmDirectory ), 
+                                              new CommandParameters()).getCommandOutput();
+            	if (fullGitRev) {
+                    return sha1;
+                } else {
+                    return sha1.substring(0,7);
+                }
  			} else throw new ScmException("No implementation for "+repository.getProvider());
         }
         catch ( ScmException e )

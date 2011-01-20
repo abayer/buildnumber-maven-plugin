@@ -3,12 +3,6 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>mojo-parent</artifactId>
-    <version>23</version>
-  </parent>
-
   <groupId>org.codehaus.mojo</groupId>
   <artifactId>cloudera-buildnumber-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
